@@ -10,13 +10,15 @@ app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 @app.event("message")
 def handle_message_in_channel(body, say, logger):    
-    print("Hello")
+    print(body)
+    chan = body.get("channel", {}).get("id", "")
     event = body.get("event", {})
     text = event.get("text", "")
-    user = event.get("user", "")  
+    user_id = event.get("user", "")
+    user = f"<@{user_id}>"
     
     #logger.info(f"Received a message from user {user}: {text}, {chan}")
-    say(f"Hello <{user}>, you said: {text}")
+    say(f"Hello {user}, you said: {text}")
 
 
 @app.event("app_mention")
