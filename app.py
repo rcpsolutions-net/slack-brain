@@ -9,17 +9,15 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
 
 @app.event("message")
-def handle_im_message(body, say, logger):    
+def handle_message_in_channel(body, say, logger):    
     print("Hello")
     event = body.get("event", {})
     text = event.get("text", "")
-    user = event.get("user", "")
-    chan = event.get("channel", "")
+    user = event.get("user", "")  
     
     #logger.info(f"Received a message from user {user}: {text}, {chan}")
     say(f"Hello <{user}>, you said: {text}")
 
-app.event("message")(handle_im_message)
 
 @app.event("app_mention")
 def handle_app_mention_events(body, say, logger):
