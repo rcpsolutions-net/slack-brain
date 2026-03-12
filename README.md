@@ -1,6 +1,6 @@
 # slack-brain
 
-A Slack bot built with [Slack Bolt for Python](https://slack.dev/bolt-python/) that brings news headlines and interactive messaging into your Slack workspace.
+A Slack bot built with [Slack Bolt for Python](https://slack.dev/bolt-python/) that brings news headlines and interactive messaging into your Slack workspace. More features to come...
 
 ## Features
 
