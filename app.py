@@ -44,6 +44,7 @@ def handle_headlines_command(ack, respond, command, logger):
         date, time = article['publishedAt'].split('T')
         time = time.replace('Z', '')
         line = f"*{article['title']}*\n_{date} {time}_\n> {article['description']}"
+        
         image_url = article['urlToImage'] or "https://via.placeholder.com/150"
         my_blocks.append(get_markdown_block(line, image_url))
         my_blocks.append(get_divider_block())
