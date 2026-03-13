@@ -1,5 +1,7 @@
-import os
+# Slack-Brain assistant in the works here. 
+# lham@2026 - RCP Solutions LLC
 
+import os
 from dotenv import load_dotenv
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
@@ -32,13 +34,12 @@ def get_divider_block():
 
 @app.command("/headlines")
 def handle_headlines_command(ack, respond, command, logger):
-    ack()
-    
-    user_id = command.get("user_id")
-    logger.info(f"Headlines command received from user {user_id}")
-    
+    ack()       
+
     headlines = newsapi.get_top_headlines(language='en', page_size=12)
+
     my_blocks = []
+
     for article in headlines['articles']:
         date, time = article['publishedAt'].split('T')
         time = time.replace('Z', '')
@@ -51,21 +52,17 @@ def handle_headlines_command(ack, respond, command, logger):
 
 @app.event("message")
 def handle_message_in_channel(body, say, logger):
-    event = body.get("event", {})
-    chan = event.get("channel", "")
+    event = body.get("event", {}) 
     text = event.get("text", "")
     user_id = event.get("user", "")
-    user = f"<@{user_id}>"
-    
-    logger.info(f"Received a message from user {user}: {text}, {chan}")
+        
     if "hi " in text.lower() or "yo " in text.lower():
-        say(f"Hello {user}!, try /headlines to get the latest news headlines.")
+        say(f"Hello <@{user_id}>!, try /headlines to get the latest news headlines.")
 
 
 @app.event("app_mention")
-def handle_app_mention_events(body, say, logger):
-    logger.info("App mentioned event received")
-    event = body.get("event", {})
+def handle_app_mention_events(body, say, logger): 
+    event = body.get("event", {})    
     text = event.get("text", "")
     
     if "hello" in text.lower():
@@ -85,7 +82,7 @@ def handle_app_mention_events(body, say, logger):
                         "type": "button",
                         "text": {"type": "plain_text", "text": "CLICK"},
                         "action_id": "button_click_action",
-                        "style": "primary"  # Makes the button green
+                        "style": "primary"
                     }
                 ]
             }
